@@ -49,14 +49,17 @@ class Ui_MainWindow(object):
         self.label_2.setWordWrap(True)
         self.label_2.setObjectName("label_2")
 
+
         self.voiceFig = QtWidgets.QLabel(self.centralwidget)
-        self.voiceFig.setGeometry(QtCore.QRect(self.window_width/2-80, 50, 161, 121))
+        self.voiceFig.setGeometry(QtCore.QRect(self.window_width/2-130, 0, 161, 121))
         self.voiceFig.setText("")
         self.gif = QMovie("icon/voice.gif")
         self.voiceFig.setMovie(self.gif)
         self.gif.start()
+        self.voiceFig.setFixedSize(self.gif.frameRect().size()/2.5)
         self.voiceFig.setScaledContents(True)
         self.voiceFig.setObjectName("voiceFig")
+
 
         self.y = (self.window_height-self.label_height)/8
         self.label = QtWidgets.QLabel(self.centralwidget)

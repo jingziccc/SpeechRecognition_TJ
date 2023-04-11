@@ -4,6 +4,10 @@ import sys
 import threading
 import speech_recognition as sr
 import subprocess
+import os
+import win32api
+
+
 
 class myWindow(QtWidgets.QMainWindow):
 
@@ -30,18 +34,24 @@ class myWindow(QtWidgets.QMainWindow):
             r.adjust_for_ambient_noise(source)
             audio = r.listen(source)
         # 将识别结果发送到 GUI 中
-        self.myCommand = r.recognize_google(audio)
+        self.myCommand = r.recognize_sphinx(audio)
+
         self.update_label()
-        if 'setting' in self.myCommand: # os.system('start ms-settings:')
+        self.myCommand = self.myCommand.lower()
+        if 'setting' in self.myCommand:
             subprocess.Popen('start ms-settings:', shell=True)
-        elif 'note' in self.myCommand:
+        elif 'notepad' in self.myCommand:
             subprocess.Popen(['notepad.exe'], shell=True)
         elif "bye" in self.myCommand:
             self.exit_program()
-        elif 'name' in self.myCommand:
+        elif 'name' in self.myCommand or 'who' in self.myCommand:
             self.ui.label_5.setText("I'm your assistant, Momoko")
+        elif 'play music' in self.myCommand:
+            win32api.ShellExecute(0, 'open', 'music.wav', '', '', 1)
         else:
             self.ui.label_5.setText("sorry, I don't understand")
+        self.update_label()  # 更新 label 显示
+
 
     def update_label(self):
         # 更新 GUI 中的 Label 显示
